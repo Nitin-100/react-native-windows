@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix disabled Pressable failing UIA Invoke pattern by returning UIA_E_ELEMENTNOTENABLED",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
