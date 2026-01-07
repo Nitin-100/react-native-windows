@@ -524,6 +524,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   if (baseView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  // Check if the element is disabled - disabled elements should return UIA_E_ELEMENTNOTENABLED per UIA guidelines
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+  if (props && props->accessibilityState.has_value() && props->accessibilityState->disabled) {
+    return UIA_E_ELEMENTNOTENABLED;
+  }
+
   baseView->GetEventEmitter().get()->onAccessibilityTap();
   auto uiaProvider =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->EnsureUiaProvider();
